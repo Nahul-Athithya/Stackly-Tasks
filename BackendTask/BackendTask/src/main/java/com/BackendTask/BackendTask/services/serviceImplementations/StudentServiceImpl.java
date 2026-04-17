@@ -5,6 +5,7 @@ import com.BackendTask.BackendTask.dto.StudentMapper;
 import com.BackendTask.BackendTask.entity.Students;
 import com.BackendTask.BackendTask.repository.StudentsRepo;
 import com.BackendTask.BackendTask.services.servicesInterface.StudentService;
+import com.BackendTask.BackendTask.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto getStudentById(Long rollno) {
         Students student = studentsRepo.findById(rollno)
-                .orElseThrow(() -> new RuntimeException("Student not found with rollno: " + rollno));
+                .orElseThrow(() -> new ResourceNotFoundException("Student", "rollno", rollno));
         return StudentMapper.mapToStudentDto(student);
     }
 
@@ -44,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto updateStudent(Long rollno, StudentDto studentDto) {
         Students student = studentsRepo.findById(rollno)
-                .orElseThrow(() -> new RuntimeException("Student not found with rollno: " + rollno));
+                .orElseThrow(() -> new ResourceNotFoundException("Student", "rollno", rollno));
 
         student.setName(studentDto.getName());
         student.setPhoneNumber(studentDto.getPhoneNumber());
@@ -58,7 +59,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto updateStudentPartially(Long rollno, StudentDto studentDto) {
         Students student = studentsRepo.findById(rollno)
-                .orElseThrow(() -> new RuntimeException("Student not found with rollno: " + rollno));
+                .orElseThrow(() -> new ResourceNotFoundException("Student", "rollno", rollno));
 
         if (studentDto.getName() != null) {
             student.setName(studentDto.getName());
@@ -80,7 +81,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long rollno) {
         Students student = studentsRepo.findById(rollno)
-                .orElseThrow(() -> new RuntimeException("Student not found with rollno: " + rollno));
+                .orElseThrow(() -> new ResourceNotFoundException("Student", "rollno", rollno));
         studentsRepo.delete(student);
     }
 }

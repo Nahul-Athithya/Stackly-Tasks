@@ -5,6 +5,7 @@ import com.BackendTask.BackendTask.services.servicesInterface.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class HomeController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto studentDto) {
+    public ResponseEntity<StudentDto> createStudent(@Valid @RequestBody StudentDto studentDto) {
         StudentDto savedStudent = studentService.createStudent(studentDto);
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
@@ -37,7 +38,7 @@ public class HomeController {
     }
 
     @PutMapping("/{rollno}")
-    public ResponseEntity<StudentDto> updateStudent(@PathVariable("rollno") Long rollno, @RequestBody StudentDto studentDto) {
+    public ResponseEntity<StudentDto> updateStudent(@PathVariable("rollno") Long rollno, @Valid @RequestBody StudentDto studentDto) {
         StudentDto updatedStudent = studentService.updateStudent(rollno, studentDto);
         return ResponseEntity.ok(updatedStudent);
     }

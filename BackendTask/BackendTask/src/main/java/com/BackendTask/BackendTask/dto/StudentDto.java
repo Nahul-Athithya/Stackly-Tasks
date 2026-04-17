@@ -1,11 +1,26 @@
 package com.BackendTask.BackendTask.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 public class StudentDto {
     
     private Long rollno;
+
+    @NotBlank(message = "Name cannot be empty")
     private String name;
+
+    @NotBlank(message = "Phone number cannot be empty")
+    @Pattern(regexp = "^\\d{10}$", message = "Phone number must be exactly 10 digits")
     private String phoneNumber;
+
+    @Min(value = 16, message = "Age must be at least 16")
+    @Max(value = 60, message = "Age must not exceed 60")
     private int age;
+
+    @NotBlank(message = "Department cannot be empty")
     private String department;
 
     public StudentDto() {
