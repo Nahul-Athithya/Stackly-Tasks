@@ -1,0 +1,7 @@
+package com.simpletask.repository;
+
+import com.simpletask.entity.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StudentRepository extends JpaRepository<Student, Long> {
+}
